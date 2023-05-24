@@ -1,0 +1,14 @@
+name: CI # Workflow name
+on: [push, pull-request] # list of events that triggers this workflow
+jobs: # actions to execute when triggered
+  build: # build action
+    runs-on: ubuntu-22.04 # to run on Ubuntu 22.04
+    steps: # commands to execute
+      - uses: actions/checkout@v2 # ?
+      - name: Set up JDK 17 # Installs JDK 17
+        uses: actions/setup@v2
+        with: # provides input parameters to the setup action
+          java-version: 17
+          distribution: 'adopt'
+      - name: Build using Gradle # Builds project
+        run: ./gradlew build
