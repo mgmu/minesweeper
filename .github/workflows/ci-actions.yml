@@ -1,6 +1,6 @@
 name: 'CI' # Workflow name
 on: # list of events that triggers this workflow
-  pull-request:
+  pull_request:
   push:
 jobs: # actions to execute when triggered
   build: # build action
