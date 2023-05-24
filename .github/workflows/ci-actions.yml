@@ -1,5 +1,5 @@
 name: CI # Workflow name
-on: [push, pull_request] # list of events that triggers this workflow
+on: [pull_request] # list of events that triggers this workflow
 jobs: # actions to execute when triggered
   build: # build action
     runs-on: ubuntu-22.04 # run on Ubuntu 22.04
