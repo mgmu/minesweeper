@@ -1,6 +1,7 @@
-name: CI # Workflow name
+name: 'CI' # Workflow name
 on: # list of events that triggers this workflow
   pull-request:
+  push:
 jobs: # actions to execute when triggered
   build: # build action
     runs-on: ubuntu-22.04 # to run on Ubuntu 22.04
