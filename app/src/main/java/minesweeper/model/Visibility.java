@@ -1,10 +1,10 @@
 package minesweeper.model;
 
 /**
- * The CellState represents the state of a Cell at any time. A Cell can be
- * either hidden, flagged or revealed.
+ * The Visibility represents the visibility state of a Cell at any time. A Cell
+ * can be either hidden, flagged or revealed.
  */
-public enum CellState {
+public enum Visibility {
     
     /**
      * The hidden state.

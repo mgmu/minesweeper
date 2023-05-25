@@ -3,11 +3,15 @@
   parmis elles sont minées.
 
 * Cell
-  A un CellState, un drapeau indiquant si la cellule est minée et un compteur de
-  mines aux alentours: min = 0 & max = 8. A une position de grille.
+  A une Visibility, un drapeau indiquant si la cellule est minée et un compteur
+  de mines aux alentours: min = 0 & max = 8. A une position de grille.
 
-* CellState
-  Définit l'état de la tuile: révélée, marquée ou cachée.
+** Tests:
+   - une cellule a la visibilité donnée en argument à la construction
+   - lance une exception si nombre de mines negatifs
+
+* Visibility
+  Définit l'état de visibilité de la tuile: révélée, marquée ou cachée.
   Etat initial: cachée
   Transitions:
   - [cachée] -> [marquée] [révélée]
