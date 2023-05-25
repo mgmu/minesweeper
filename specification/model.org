@@ -1,0 +1,39 @@
+* Grid
+  Encapsule une liste de cellules de taille largeur * hauteur, dont certaines 
+  parmis elles sont minées.
+
+* Cell
+  A un CellState, un drapeau indiquant si la cellule est minée et un compteur de
+  mines aux alentours: min = 0 & max = 8. A une position de grille.
+
+* CellState
+  Définit l'état de la tuile: révélée, marquée ou cachée.
+  Etat initial: cachée
+  Transitions:
+  - [cachée] -> [marquée] [révélée]
+  - [marquée] -> [cachée]
+  - [cachée] -> []
+
+* Position
+  Encapsule des coordonnées dans une matrice, ne peut pas être négative:
+  (0, 0) (0, 1) ...
+  (1, 0) (1, 1) ...
+    .
+    .
+    .
+
+  On veut pouvoir déterminer les positions voisines d'une position:
+  hors bords (i = 0 || j = 0)
+  (i, j) -> (i-1, j-1) (i-1, j) (i-1, j+1)
+            (  i, j-1) (  i, j) (  i, j+1)
+            (i+1, j-1) (i+1, j) (i+1, j+1)
+
+** Tests
+   - la construction d'une position à des coordonnées négatives lancent une 
+     exception
+   - pour (0, 0), les positions voisines sont au nombre de 3 et sont: (0, 1),
+     (1, 1) et (1, 0).
+   - pour tout i > 0 et j = 0, les positions voisines sont au nombre de 5 et 
+     sont: (i-1, j), (i-1, j+1), (i, j+1), (i+1, j+1), (i+1, j)
+   - pour tout j > 0 et i = 0, les positions voisines sont au nombre de 5 et
+     sont: (i, j+1), (i+1, j+1), (i+1, j), (i+1, j-1), (i, j-1)
