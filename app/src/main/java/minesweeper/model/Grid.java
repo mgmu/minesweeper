@@ -69,7 +69,6 @@ public class Grid {
         }
     }
 
-    // Generates mines random positions and mines each corresponding cell
     /**
      * Generetes mines random positions and places a mine on each corresponding
      * cell. The other cells are left unmodified.
@@ -90,8 +89,10 @@ public class Grid {
      * @throws IllegalArgumentException if position is outside this Grid
      * @throws IllegalStateException if position is valid and no cell was found
      *                               at that position
+     * @throws NullPointerException if positino is null
      */
     public Cell cellAt(Position position) {
+        Objects.requireNonNull(position);
         if (position.line() >= this.height || position.column() >= this.width)
             throw new IllegalArgumentException("Illegal position: " + position);
         for (Cell cell: this.cells) {
