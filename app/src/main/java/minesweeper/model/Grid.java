@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import minesweeper.view.Observer;
+
 /**
  * A Grid encapsulates cells placed in order to form a grid of certain width and
  * height.
  */
-public class Grid {
+public class Grid implements Observable {
 
     // The width of this Grid.
     private final int width;
@@ -18,6 +20,9 @@ public class Grid {
 
     // The cells of this Grid.
     private final List<Cell> cells;
+
+    // The observers of this Grid.
+    private final List<Observer> observers;
 
     /**
      * Class constructor that specifies the dimensions of the new Grid and the
@@ -42,6 +47,7 @@ public class Grid {
         this.width = width;
         this.height = height;
         this.cells = new ArrayList<>(nbCells);
+        this.observers = new ArrayList<>();
         this.initializeCells();
         this.placeMines(mines);
     }
@@ -113,5 +119,29 @@ public class Grid {
                 total++;
         }
         return total;
+    }
+
+    @Override
+    public void add(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer: this.observers) {
+            observer.update(new RevealOnlyGrid(this));
+        }
+    }
+
+    /**
+     * {@return true if the cell at the given position was indeed revealed}
+     * @param position the position of the cell to reveal
+     * @throws IllegalArgumentException if position is not inside this Grid
+     * @throws NullPointerException if position is null
+     */
+    public boolean revealCellAt(Position position) {
+        Objects.requireNonNull(position);
+        Cell cell = this.cellAt(position);
+        return cell.reveal();
     }
 }

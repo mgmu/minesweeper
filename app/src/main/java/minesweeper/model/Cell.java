@@ -88,4 +88,17 @@ public class Cell {
     public void mine() {
         this.isMined = true;
     }
+
+    /**
+     * Reveals this Cell if possible. A Cell can be revealed if its Visibility
+     * is HIDDEN, otherwise, it can not be revealed.
+     * @return true if this Cell was indeed revealed, false otherwise.
+     */
+    public boolean reveal() {
+        if (this.visibility == Visibility.HIDDEN) {
+            this.visibility = Visibility.REVEALED;
+            return true;
+        }
+        return false;
+    }
 }

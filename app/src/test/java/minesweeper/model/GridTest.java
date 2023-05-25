@@ -57,4 +57,12 @@ class GridTest {
         Grid sut = new Grid(40, 40, 0);
         assertEquals(0, sut.mines());
     }
+
+    @Test
+    void revealHiddenCellMakesCellRevealed() {
+        Grid sut = new Grid(5, 5, 0);
+        sut.revealCellAt(Position.ORIGIN);
+        Cell cell = sut.cellAt(Position.ORIGIN);
+        assertEquals(Visibility.REVEALED, cell.visibility());
+    }
 }

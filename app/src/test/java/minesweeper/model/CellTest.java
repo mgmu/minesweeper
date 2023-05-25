@@ -26,4 +26,22 @@ class CellTest {
         sut.mine();
         assertTrue(sut.isMined());
     }
+
+    @Test
+    void revealedCellCanNotBeRevealed() {
+        Cell sut = new Cell(Visibility.REVEALED, 0, false, Position.ORIGIN);
+        assertFalse(sut.reveal());
+    }
+
+    @Test
+    void hiddenCellCanBeRevealed() {
+        Cell sut = new Cell(Visibility.HIDDEN, 0, false, Position.ORIGIN);
+        assertTrue(sut.reveal());
+    }
+
+    @Test
+    void flaggedCellCanNotBeRevealed() {
+        Cell sut = new Cell(Visibility.FLAGGED, 0, false, Position.ORIGIN);
+        assertFalse(sut.reveal());
+    }
 }
