@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 class PositionTest {
 
@@ -98,5 +99,41 @@ class PositionTest {
                 new Position(43, 42), new Position(43, 41),
                 new Position(42, 41));
         assertEquals(expected, sut.neighbors());
+    }
+
+    @Test
+    void negativeNumberOfRandomPositionsToGenerateThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.randomPositions(-1, 1, 1));
+    }
+
+    @Test
+    void negativeOr0MaxLineForRandomPositionGenerationThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.randomPositions(0, 0, 4));
+    }
+
+    @Test
+    void negativeOr0MaxColumnForRandomPositionGenerationThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.randomPositions(1, 2, -12));
+    }
+
+    @Test
+    void morePositionsThanPossibleInRandomPositionsGenerationThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.randomPositions(5, 2, 2));
+    }
+
+    @Test
+    void zeroPositionsToGenerateInRandomPositionsGenerationReturnsEmptyList() {
+        List<Position> empty = new ArrayList<>();
+        assertEquals(empty, Position.randomPositions(0, 1, 1));
+    }
+
+    @Test
+    void oneRandomPositionReturnsPositionInBounds() {
+        List<Position> positions = Position.randomPositions(1, 1, 1);
+        assertEquals(Position.ORIGIN, positions.get(0));
     }
 }

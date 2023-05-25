@@ -13,33 +13,26 @@ public class Cell {
     // Maximum number of mines around a Cell
     private static final int MAX_MINES_AROUND = 8;
 
-    /**
-     * The visibility of this Cell.
-     */
+    // The visibility of this Cell.
     private Visibility visibility;
 
-    /**
-     * The number of mines around this Cell.
-     */
+    // The number of mines around this Cell.
     private int minesAround;
 
-    /**
-     * Indicates if this Cell is mined or not.
-     */
+    // Indicates if this Cell is mined or not.
     private boolean isMined;
 
-    /**
-     * The position of this Cell.
-     */
+    // The position of this Cell.
     private Position position;
 
     /**
      * Class constructor that specifies visibility, number of mines around, a
-     * flag that indicates if this Cell is mined and the Position of this Cell
-     * @param visibility the visibility of this Cell
-     * @param minesAround the number of mines around this Cell
-     * @param isMined true if this Cell is mined, false otherwise
-     * @param position the position of this Cell
+     * flag that indicates if the new Cell is mined and the Position of thew new
+     * Cell.
+     * @param visibility the visibility of the new Cell
+     * @param minesAround the number of mines around the new Cell
+     * @param isMined true if the new Cell is mined, false otherwise
+     * @param position the position of the new Cell
      */
     public Cell(Visibility visibility, int minesAround, boolean isMined,
             Position position) {
@@ -80,5 +73,12 @@ public class Cell {
      */
     public Position position() {
         return this.position;
+    }
+
+    /**
+     * Places a mine on this Cell.
+     */
+    public void mine() {
+        this.isMined = true;
     }
 }
