@@ -37,3 +37,5 @@
      sont: (i-1, j), (i-1, j+1), (i, j+1), (i+1, j+1), (i+1, j)
    - pour tout j > 0 et i = 0, les positions voisines sont au nombre de 5 et
      sont: (i, j+1), (i+1, j+1), (i+1, j), (i+1, j-1), (i, j-1)
+   - pour tout les autres cas, il y en a 8 et sont: (i-1, j-1), (i-1, j), 
+     (i-1, j+1), (i, j+1), (i+1, j+1), (i+1, j), (i+1, j-1), (i, j-1)
