@@ -19,4 +19,11 @@ class CellTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Cell(vis, 9, true, Position.ORIGIN));
     }
+
+    @Test
+    void isMinedCellReturnsTrueAfterMiningCell() {
+        Cell sut = new Cell(Visibility.HIDDEN, 0, false, Position.ORIGIN);
+        sut.mine();
+        assertTrue(sut.isMined());
+    }
 }
