@@ -1,0 +1,5 @@
+* MainView
+  Encapsule une GridView et un menu pour la création de nouvelle grille.
+ 
+* GridView
+  Représente la grille.
