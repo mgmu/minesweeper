@@ -1,5 +1,7 @@
 package minesweeper.model;
 
+import java.util.Objects;
+
 /**
  * A Cell represents an element of a grid. Located at a certain position, it can
  * be mined, holds the number of mines in the Cells around it and has a certain

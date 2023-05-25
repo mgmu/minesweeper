@@ -2,6 +2,7 @@ package minesweeper.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A Grid encapsulates cells placed in order to form a grid of certain width and
