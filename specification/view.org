@@ -1,5 +1,3 @@
-* MainView
-  Encapsule une GridView et un menu pour la création de nouvelle grille.
- 
 * GridView
-  Représente la grille.
+  Représente la grille. Est écoutée par le controleur et reçoit les mises à jour
+  du modèle.
