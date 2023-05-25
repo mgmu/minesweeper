@@ -12,7 +12,7 @@
   Transitions:
   - [cachée] -> [marquée] [révélée]
   - [marquée] -> [cachée]
-  - [cachée] -> []
+  - [révélée] -> []
 
 * Position
   Encapsule des coordonnées dans une matrice, ne peut pas être négative:
