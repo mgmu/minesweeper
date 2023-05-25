@@ -1,5 +1,7 @@
 package minesweeper.model;
 
+import java.util.Objects;
+
 /**
  * A Cell represents an element of a grid. Located at a certain position, it can
  * be mined, holds the number of mines in the Cells around it and has a certain
@@ -8,10 +10,10 @@ package minesweeper.model;
 public class Cell {
 
     // Minimum number of mines around a Cell
-    private static final int MIN_MINES_AROUND = 0;
+    public static final int MIN_MINES_AROUND = 0;
 
     // Maximum number of mines around a Cell
-    private static final int MAX_MINES_AROUND = 8;
+    public static final int MAX_MINES_AROUND = 8;
 
     // The visibility of this Cell.
     private Visibility visibility;
@@ -33,9 +35,14 @@ public class Cell {
      * @param minesAround the number of mines around the new Cell
      * @param isMined true if the new Cell is mined, false otherwise
      * @param position the position of the new Cell
+     * @throws IllegalArgumentException if minesAround is strictly inferior to
+     *                                  MIN_MINES_AROUND or strictly superior to
+     *                                  MAX_MINES_AROUND
      */
     public Cell(Visibility visibility, int minesAround, boolean isMined,
             Position position) {
+        Objects.requireNonNull(visibility);
+        Objects.requireNonNull(position);
         if (minesAround < Cell.MIN_MINES_AROUND
                 || minesAround > Cell.MAX_MINES_AROUND) {
             throw new IllegalArgumentException(
