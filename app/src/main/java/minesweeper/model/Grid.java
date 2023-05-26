@@ -98,7 +98,7 @@ public class Grid implements Observable {
      * @throws IllegalArgumentException if position is outside this Grid
      * @throws IllegalStateException if position is valid and no cell was found
      *                               at that position
-     * @throws NullPointerException if positino is null
+     * @throws NullPointerException if position is null
      */
     public Cell cellAt(Position position) {
         Objects.requireNonNull(position);
