@@ -208,4 +208,15 @@ public class Grid implements Observable {
     public Dimension dimension() {
         return new Dimension(this.width, this.height);
     }
+
+    /**
+     * {@return true if the cell at position was flagged and became hidden or
+     * was hidden and then became flagged}
+     * @param position the position of the cell to flag or unflag
+     */
+    public boolean flagCellAt(Position position) {
+        Objects.requireNonNull(position);
+        Cell cell = this.cellAt(position);
+        return cell.flag();
+    }
 }
