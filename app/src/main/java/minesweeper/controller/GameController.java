@@ -28,18 +28,25 @@ public class GameController extends MouseInputAdapter {
         this.model.notifyObservers();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent event) {
-        Object src = event.getSource();
-        if (!(src instanceof GridView))
-            return;
+    // Acts on model depending on button activated
+    private void actionOnMouseButton(MouseEvent event, Position position) {
+        if (SwingUtilities.isLeftMouseButton(event)) {
+            if (this.model.revealCellAt(position))
+                this.model.notifyObservers();
+        } else if (SwingUtilities.isRightMouseButton(event)) {
+            if (this.model.flagCellAt(position))
+                this.model.notifyObservers();
+        }
+    }
 
-        GridView gridView = (GridView) src;
+    // Returns the position of the activated cell, null if there was no cell
+    // activated
+    private Position positionOfClick(GridView gridView, MouseEvent event) {
         Point[][] centerPoints = gridView.centerPoints();
         Point click = event.getPoint();
 
         if (centerPoints == null)
-            return;
+            return null;
 
         // Compute position of clicked cell with euclidian distance from click
         // to cell center
@@ -59,16 +66,31 @@ public class GameController extends MouseInputAdapter {
         }
 
         if (minDist > gridView.sideLength())
+            return null;
+        return new Position(l, c);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent event) {
+        Object src = event.getSource();
+        if (!(src instanceof GridView))
             return;
 
-        Position pos = new Position(l, c);
+        GridView gridView = (GridView) src;
+        Position pos = this.positionOfClick(gridView, event);
+        if (pos != null)
+            this.actionOnMouseButton(event, pos);
+    }
 
-        if (SwingUtilities.isLeftMouseButton(event)) {
-            if (this.model.revealCellAt(pos))
-                this.model.notifyObservers();
-        } else if (SwingUtilities.isRightMouseButton(event)) {
-            if (this.model.flagCellAt(pos))
-                this.model.notifyObservers();
-        }
+    @Override
+    public void mouseDragged(MouseEvent event) {
+        Object src = event.getSource();
+        if (!(src instanceof GridView))
+            return;
+
+        GridView gridView = (GridView) src;
+        Position pos = this.positionOfClick(gridView, event);
+        if (pos != null)
+        this.actionOnMouseButton(event, pos);        
     }
 }

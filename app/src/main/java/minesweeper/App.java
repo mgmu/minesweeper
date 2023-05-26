@@ -51,6 +51,7 @@ public class App {
         // The controller
         GameController gameController = new GameController(model);
         gridView.addMouseListener(gameController);
+        gridView.addMouseMotionListener(gameController);
 
         // Display
         frame.setJMenuBar(menuBar);
