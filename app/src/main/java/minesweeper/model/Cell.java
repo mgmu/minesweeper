@@ -126,4 +126,19 @@ public class Cell {
     public List<Position> neighborsPositions() {
         return this.position.neighbors();
     }
+
+    /**
+     * {@return true if this Cell was hidden and became flagged or was flagged
+     * and became hidden, false otherwise}
+     */
+    public boolean flag() {
+        if (this.visibility == Visibility.FLAGGED) {
+            this.visibility = Visibility.HIDDEN;
+            return true;
+        } else if (this.visibility == Visibility.HIDDEN) {
+            this.visibility = Visibility.FLAGGED;
+            return true;
+        }
+        return false;
+    }
 }

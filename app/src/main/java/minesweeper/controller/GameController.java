@@ -1,13 +1,13 @@
 package minesweeper.controller;
 
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.SwingUtilities;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import minesweeper.model.Grid;
 import minesweeper.model.Position;
-
 import minesweeper.view.GridView;
 
 /**
@@ -61,7 +61,14 @@ public class GameController extends MouseInputAdapter {
         if (minDist > gridView.sideLength())
             return;
 
-        if (this.model.revealCellAt(new Position(l, c)))
-            this.model.notifyObservers();
+        Position pos = new Position(l, c);
+
+        if (SwingUtilities.isLeftMouseButton(event)) {
+            if (this.model.revealCellAt(pos))
+                this.model.notifyObservers();
+        } else if (SwingUtilities.isRightMouseButton(event)) {
+            if (this.model.flagCellAt(pos))
+                this.model.notifyObservers();
+        }
     }
 }

@@ -74,4 +74,26 @@ class GridTest {
         Dimension expected = new Dimension(sut.width(), sut.height());
         assertEquals(expected, sut.dimension());
     }
+
+    @Test
+    void flagCellAtNullPositionThrowsNPE() {
+        Grid sut = new Grid(3, 3);
+        assertThrows(NullPointerException.class, () -> sut.flagCellAt(null));
+    }
+
+    @Test
+    void flagRevealedCellReturnsFalse() {
+        Grid sut = new Grid(3, 3);
+        Position position = new Position(2, 2);
+        sut.revealCellAt(position);
+        assertFalse(sut.flagCellAt(position));
+    }
+
+    @Test
+    void flagHiddenCellReturnsTrue() {
+        Grid sut = new Grid(2, 5);
+        Position position = new Position(1, 0);
+        sut.flagCellAt(position);
+        assertTrue(sut.flagCellAt(position));
+    }
 }
