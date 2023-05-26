@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import java.awt.Dimension;
+
 import minesweeper.view.Observer;
 
 /**
@@ -157,5 +159,15 @@ public class Grid implements Observable {
      */
     public int width() {
         return this.width;
+    }
+
+    /**
+     * Computes the dimension of this Grid. Causes the heap allocation of a new
+     * Dimension object. Use {@code height()} and {@code width()} for direct
+     * acces.
+     * @return the dimension of this Grid
+     */
+    public Dimension dimension() {
+        return new Dimension(this.width, this.height);
     }
 }
