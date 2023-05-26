@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 
 import minesweeper.view.GridView;
 
+import minesweeper.model.Grid;
+
 /**
  * The application.
  */
@@ -39,6 +41,12 @@ public class App {
         // The grid view
         GridView gridView = new GridView();
         frame.getContentPane().add(gridView);
+
+        // The model
+        Grid model = new Grid(50, 30, 150);
+        model.add(gridView);
+
+        model.notifyObservers();
 
         // Display
         frame.setJMenuBar(menuBar);

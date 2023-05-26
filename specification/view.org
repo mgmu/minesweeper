@@ -1,3 +1,22 @@
 * GridView
   Représente la grille. Est écoutée par le controleur et reçoit les mises à jour
   du modèle.
+
+** Dessin des cellules
+   Données nécessaires:
+*** Taille de la grille, hauteur et largeur
+    Ajouter des getters pour la taille à RevealOnlyGrid
+*** Taille de la zone de dessin, hauteur et largeur
+    Utiliser la méthode ~getSize()~, retourne une ~Dimension~ ou ~getWidth()~ et
+    ~getHeight()~ directement
+*** Déterminer la taille d'une cellule
+    *minScreen* := min(hauteur de l'écran, largeur de l'écran)
+    *maxGrid* := max(hauteur de la grille, largeur de la grille)
+    *len* := minScreen / maxGrid
+*** Déterminer la position du centre de chaque cellule
+    Le centre de chaque cellule est espacée de *len* pixel horizontalement et 
+    verticalement. Le centre de la première se trouve en *(len/2, len/2)*
+*** Dessiner les cellules cachées
+    Avec un carré de côté *len* (on peut utiliser le même carré), il faudra 
+    appliquer la bordure (stroke) avant de le dessiner
+*** Dessiner du texte pour les cellules révélées
