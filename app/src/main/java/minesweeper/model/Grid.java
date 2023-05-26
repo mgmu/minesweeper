@@ -3,6 +3,8 @@ package minesweeper.model;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 import java.awt.Dimension;
 
@@ -151,7 +153,36 @@ public class Grid implements Observable {
     public boolean revealCellAt(Position position) {
         Objects.requireNonNull(position);
         Cell cell = this.cellAt(position);
-        return cell.reveal();
+        if (cell.reveal()) {
+            this.flood(cell);
+            return true;
+        }
+        return false;
+    }
+
+    // Reveals surroundings of src if they are hidden, not mined and
+    // without surrounding mines and propagates to its surroundings
+    private void flood(Cell src) {
+        if (src.minesAround() != 0 || src.isMined())
+            return;
+
+        Deque<Cell> toExplore = new ArrayDeque<>();
+        toExplore.push(src);
+        while (!toExplore.isEmpty()) {
+            Cell cur = toExplore.pop();
+            cur.reveal();
+            if (cur.minesAround() != 0)
+                continue;
+            List<Position> neighbors = cur.neighborsPositions();
+            for (Position position: neighbors) {
+                if (!position.inBounds(this.width, this.height))
+                    continue;
+                Cell neigh = this.cellAt(position);
+                if (neigh.isHidden() && !toExplore.contains(neigh)
+                        && !neigh.isMined())
+                    toExplore.add(neigh);
+            }
+        }
     }
 
     /**

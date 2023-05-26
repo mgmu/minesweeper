@@ -86,6 +86,45 @@ public class GridView extends JPanel implements Observer {
         return this.centerPoints;
     }
 
+    // Updates center points on grid dimension update if they changed
+    private void checkUpToDateDimensions() {
+        if (!this.currentGridDim.equals(this.previousGridDim)) {
+            this.previousGridDim = this.currentGridDim;
+            this.computeCellCenterPoints();
+        }
+    }
+
+    // Draws on the given Graphics2D object the view of a hidden cell
+    private void hiddenCellView(Graphics2D g2d, int i, int j, int l) {
+        g2d.setPaint(Color.YELLOW);
+        g2d.fillRect(j*l, i*l, l, l);
+    }
+
+    // Draws on the given Graphics2D object the view of a flagged cell
+    private void flaggedCellView(Graphics2D g2d, int i, int j, int l) {
+        g2d.setPaint(Color.RED);
+        g2d.fillRect(j*l, i*l, l, l);
+    }
+
+    // Draws on the given Graphics2D object the view of a revealed cell
+    private void revealedCellView(Graphics2D g2d, Cell cell, int i, int j,
+            int l, int o) {
+        StringBuilder builder = new StringBuilder();
+
+        if (cell.isMined())
+            builder.append("X");
+        else
+            builder.append(cell.minesAround());
+
+        String fontName = g2d.getFont().getFontName();
+        if (cell.minesAround() != 0 || cell.isMined()) {
+            g2d.setPaint(Color.BLACK);
+            g2d.setFont(new Font(fontName, Font.PLAIN, FONT_SIZE));
+            g2d.drawString(builder.toString(), (int)(j * l + (0.75) * o),
+                    (int)(i * l + (1.5) * o));
+        }
+    }
+
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -93,15 +132,10 @@ public class GridView extends JPanel implements Observer {
         if (this.model == null)
             return;
 
-        // Update center points on grid dimension update
-        if (!this.currentGridDim.equals(this.previousGridDim)) {
-            this.previousGridDim = this.currentGridDim;
-            this.computeCellCenterPoints();
-        }
+        checkUpToDateDimensions();
 
         int l = this.sideLength();
         int o = l / 2;
-
         Graphics2D g2d = (Graphics2D) graphics;
 
         // Draw cells
@@ -112,25 +146,13 @@ public class GridView extends JPanel implements Observer {
                     new Rectangle2D.Double(j * l - o, i * l - o, l, l);
                 Cell cell = this.model.cellAt(new Position(i, j));
                 Visibility visibility = cell.visibility();
-                if (visibility == Visibility.HIDDEN) {
-                    g2d.setPaint(Color.YELLOW);
-                    g2d.fillRect(j*l, i*l, l, l);
-                } else if (visibility == Visibility.FLAGGED) {
-                    g2d.setPaint(Color.RED);
-                    g2d.fillRect(j*l, i*l, l, l);
-                } else {
-                    StringBuilder builder = new StringBuilder();
-                    if (cell.isMined())
-                        builder.append("X");
-                    else
-                        builder.append(cell.minesAround());
-                    String fontName = g2d.getFont().getFontName();
-                    g2d.setFont(new Font(fontName, Font.PLAIN, FONT_SIZE));
-                    g2d.drawString(builder.toString(),
-                            (int)(j * l + (0.75) * o),
-                            (int)(i * l + (1.5) * o));
-                }
-                g2d.setPaint(Color.BLACK);
+                if (visibility == Visibility.HIDDEN)
+                    this.hiddenCellView(g2d, i, j, l);
+                else if (visibility == Visibility.FLAGGED)
+                    this.flaggedCellView(g2d, i, j, l);
+                else
+                    this.revealedCellView(g2d, cell, i, j, l, o);
+                g2d.setPaint(Color.GRAY);
                 g2d.draw(new Rectangle2D.Double(j * l, i * l, l, l));
             }
         }
