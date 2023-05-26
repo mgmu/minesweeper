@@ -144,4 +144,18 @@ public class Grid implements Observable {
         Cell cell = this.cellAt(position);
         return cell.reveal();
     }
+
+    /**
+     * {@return the height of this Grid}
+     */
+    public int height() {
+        return this.height;
+    }
+
+    /**
+     * {@return the width of this Grid}
+     */
+    public int width() {
+        return this.width;
+    }
 }

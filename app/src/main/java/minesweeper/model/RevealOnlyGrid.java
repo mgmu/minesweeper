@@ -13,4 +13,18 @@ public record RevealOnlyGrid(Grid grid) {
     public boolean revealCellAt(Position position) {
         return this.grid.revealCellAt(position);
     }
+
+    /**
+     * {@return the height of this Grid}
+     */
+    public int height() {
+        return this.grid.height();
+    }
+
+    /**
+     * {@return the width of this Grid}
+     */
+    public int width() {
+        return this.grid.width();
+    }
 }
