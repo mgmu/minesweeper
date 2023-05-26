@@ -14,6 +14,8 @@ import minesweeper.view.GridView;
 
 import minesweeper.model.Grid;
 
+import minesweeper.controller.GameController;
+
 /**
  * The application.
  */
@@ -38,7 +40,7 @@ public class App {
         gameMenu.add(newGameMenuItem);
         menuBar.add(gameMenu);
 
-        // The grid view
+        // The view
         GridView gridView = new GridView();
         frame.getContentPane().add(gridView);
 
@@ -46,7 +48,9 @@ public class App {
         Grid model = new Grid(50, 30, 150);
         model.add(gridView);
 
-        model.notifyObservers();
+        // The controller
+        GameController gameController = new GameController(model);
+        gridView.addMouseListener(gameController);
 
         // Display
         frame.setJMenuBar(menuBar);

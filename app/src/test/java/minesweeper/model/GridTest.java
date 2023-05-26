@@ -3,6 +3,8 @@ package minesweeper.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Dimension;
+
 class GridTest {
 
     @Test
@@ -64,5 +66,12 @@ class GridTest {
         sut.revealCellAt(Position.ORIGIN);
         Cell cell = sut.cellAt(Position.ORIGIN);
         assertEquals(Visibility.REVEALED, cell.visibility());
+    }
+
+    @Test
+    void gridDimensionCorrespondsToWidthAndHeight() {
+        Grid sut = new Grid(42, 42);
+        Dimension expected = new Dimension(sut.width(), sut.height());
+        assertEquals(expected, sut.dimension());
     }
 }

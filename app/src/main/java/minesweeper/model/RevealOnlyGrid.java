@@ -1,5 +1,7 @@
 package minesweeper.model;
 
+import java.awt.Dimension;
+
 /**
  * A RevealOnlyGrid represents a Grid that supports the unique operation of
  * revealing its cells.
@@ -26,5 +28,12 @@ public record RevealOnlyGrid(Grid grid) {
      */
     public int width() {
         return this.grid.width();
+    }
+
+    /**
+     * {@return the dimensino of this Grid}
+     */
+    public Dimension dimension() {
+        return this.grid.dimension();
     }
 }
