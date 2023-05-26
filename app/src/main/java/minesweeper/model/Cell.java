@@ -101,4 +101,14 @@ public class Cell {
         }
         return false;
     }
+
+    /**
+     * Increments the number of mines around this Cell. If the number of mines
+     * around this Cell is superior or equal the maximum number of mines around
+     * a Cell, does nothing.
+     */
+    void incrementMinesAround() {
+        if (this.minesAround < MAX_MINES_AROUND)
+            this.minesAround++;
+    }
 }

@@ -89,6 +89,13 @@ public class Grid implements Observable {
         for (Position position: positions) {
             Cell cell = this.cellAt(position);
             cell.mine();
+            List<Position> neighbors = position.neighbors();
+            for (Position pos: neighbors) {
+                if (pos.inBounds(this.width, this.height)) {
+                    Cell neighbor = this.cellAt(pos);
+                    neighbor.incrementMinesAround();
+                }
+            }
         }
     }
 

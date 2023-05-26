@@ -89,4 +89,16 @@ public record Position(int line, int column) {
         }
         return positions;
     }
+
+    /**
+     * {@return true if this Position is inside the matrix of size width *
+     * height}
+     */
+    public boolean inBounds(int width, int height) {
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException(
+              String.format("Illegal bounds: %d, %d", width, height));
+        }
+        return this.line < height && this.column < width;
+    }
 }
