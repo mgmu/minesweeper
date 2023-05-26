@@ -3,6 +3,8 @@ package minesweeper.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 class CellTest {
 
     @Test
@@ -50,5 +52,31 @@ class CellTest {
         Cell sut = new Cell(Visibility.HIDDEN, 8, false, Position.ORIGIN);
         sut.incrementMinesAround();
         assertEquals(Cell.MAX_MINES_AROUND, sut.minesAround());
+    }
+
+    @Test
+    void cellNeighborPositionsEqualCellPositionNeighbors() {
+        Position position = new Position(4, 5);
+        Cell sut = new Cell(Visibility.FLAGGED, 5, false, position);
+        List<Position> expected = position.neighbors();
+        assertEquals(expected, sut.neighborsPositions());
+    }
+
+    @Test
+    void isHiddenCellWhenRevealedReturnsFalse() {
+        Cell sut = new Cell(Visibility.REVEALED, 4, false, Position.ORIGIN);
+        assertFalse(sut.isHidden());
+    }
+
+    @Test
+    void isHiddenCellWhenFlaggedReturnsFalse() {
+        Cell sut = new Cell(Visibility.FLAGGED, 0, true, Position.ORIGIN);
+        assertFalse(sut.isHidden());
+    }
+
+    @Test
+    void isHiddenCellWhenHiddenReturnsTrue() {
+        Cell sut = new Cell(Visibility.HIDDEN, 3, true, Position.ORIGIN);
+        assertTrue(sut.isHidden());
     }
 }

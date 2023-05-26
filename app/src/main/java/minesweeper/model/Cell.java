@@ -1,6 +1,7 @@
 package minesweeper.model;
 
 import java.util.Objects;
+import java.util.List;
 
 /**
  * A Cell represents an element of a grid. Located at a certain position, it can
@@ -110,5 +111,19 @@ public class Cell {
     void incrementMinesAround() {
         if (this.minesAround < MAX_MINES_AROUND)
             this.minesAround++;
+    }
+
+    /**
+     * {@return true if the visibility of this Cell is Visibility.HIDDEN}
+     */
+    public boolean isHidden() {
+        return this.visibility == Visibility.HIDDEN;
+    }
+
+    /**
+     * {@return the list of neighbor positions of this Cell position}
+     */
+    public List<Position> neighborsPositions() {
+        return this.position.neighbors();
     }
 }
