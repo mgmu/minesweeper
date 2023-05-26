@@ -136,4 +136,33 @@ class PositionTest {
         List<Position> positions = Position.randomPositions(1, 1, 1);
         assertEquals(Position.ORIGIN, positions.get(0));
     }
+
+    @Test
+    void inBoundsOfWidthStrictlyInferiorTo1ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.ORIGIN.inBounds(0, 4));
+    }
+
+    @Test
+    void inBoundsOfHeightStrictlyInferiorTo1ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Position.ORIGIN.inBounds(5, -1));
+    }
+
+    @Test
+    void inBoundsOfPosition1LinePassedWidthReturnsFalse() {
+        Position sut = new Position(5, 3);
+        assertFalse(sut.inBounds(5, 5));
+    }
+
+    @Test
+    void inBoundsOfPositionInsideBoundsReturnsTrue() {
+        assertTrue(Position.ORIGIN.inBounds(5, 5));
+    }
+
+    @Test
+    void inBoudsOfPosition5ColumnsPassedHeightReturnsFalse() {
+        Position sut = new Position(3, 12);
+        assertFalse(sut.inBounds(5, 8));
+    }
 }

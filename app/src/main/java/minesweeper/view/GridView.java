@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Point;
+import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
@@ -32,6 +33,9 @@ public class GridView extends JPanel implements Observer {
 
     // The center points of the cells of the grid
     private Point[][] centerPoints;
+
+    // Font size for number of mines around a cell
+    private static final int FONT_SIZE = 15;
 
     /**
      * Class constructor.
@@ -120,6 +124,8 @@ public class GridView extends JPanel implements Observer {
                         builder.append("X");
                     else
                         builder.append(cell.minesAround());
+                    String fontName = g2d.getFont().getFontName();
+                    g2d.setFont(new Font(fontName, Font.PLAIN, FONT_SIZE));
                     g2d.drawString(builder.toString(),
                             (int)(j * l + (0.75) * o),
                             (int)(i * l + (1.5) * o));

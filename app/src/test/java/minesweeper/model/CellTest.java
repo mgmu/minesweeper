@@ -44,4 +44,11 @@ class CellTest {
         Cell sut = new Cell(Visibility.FLAGGED, 0, false, Position.ORIGIN);
         assertFalse(sut.reveal());
     }
+
+    @Test
+    void cellIncrementMinesAroundIsLimitedToMax() {
+        Cell sut = new Cell(Visibility.HIDDEN, 8, false, Position.ORIGIN);
+        sut.incrementMinesAround();
+        assertEquals(Cell.MAX_MINES_AROUND, sut.minesAround());
+    }
 }
