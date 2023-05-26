@@ -17,7 +17,7 @@ import minesweeper.view.GridView;
 public class GameController extends MouseInputAdapter {
 
     // The model to act on
-    private final Grid model;
+    private Grid model;
 
     /**
      * Class constructor that specifies the grid to act on.
@@ -92,5 +92,14 @@ public class GameController extends MouseInputAdapter {
         Position pos = this.positionOfClick(gridView, event);
         if (pos != null)
         this.actionOnMouseButton(event, pos);        
+    }
+
+    /**
+     * Sets the new model of this GameController.
+     * @param model the new model
+     */
+    public void setModel(Grid model) {
+        this.model = model;
+        this.model.notifyObservers();
     }
 }
