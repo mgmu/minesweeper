@@ -21,6 +21,9 @@ public class GameController extends MouseInputAdapter {
     // The model to act on
     private Grid model;
 
+    // The previous time of flag placement
+    private long previousClick;
+
     /**
      * Class constructor that specifies the grid to act on.
      * @param model the grid to act on
@@ -30,15 +33,26 @@ public class GameController extends MouseInputAdapter {
         this.model.notifyObservers();
     }
 
+    // Reveals the cell at position, and if it was indeed revealed, notifies
+    // observers
+    private void revealCellAndUpdate(Position position) {
+        if (this.model.revealCellAt(position))
+            this.model.notifyObservers();
+    }
+
+    // Flags the cell at position, and if it changed, notifies observers
+    private void flagCellAndUpdate(Position position) {
+        if (this.model.flagCellAt(position)) {
+            this.model.notifyObservers();
+        }
+    }
+
     // Acts on model depending on button activated
     private void actionOnMouseButton(MouseEvent event, Position position) {
-        if (SwingUtilities.isLeftMouseButton(event)) {
-            if (this.model.revealCellAt(position))
-                this.model.notifyObservers();
-        } else if (SwingUtilities.isRightMouseButton(event)) {
-            if (this.model.flagCellAt(position))
-                this.model.notifyObservers();
-        }
+        if (SwingUtilities.isLeftMouseButton(event))
+            this.revealCellAndUpdate(position);
+        else if (SwingUtilities.isRightMouseButton(event))
+            this.flagCellAndUpdate(position);
     }
 
     // Returns the position of the activated cell, null if there was no cell
@@ -98,8 +112,8 @@ public class GameController extends MouseInputAdapter {
 
         GridView gridView = (GridView) src;
         Position pos = this.positionOfClick(gridView, event);
-        if (pos != null)
-        this.actionOnMouseButton(event, pos);        
+        if (pos != null && SwingUtilities.isLeftMouseButton(event))
+            this.revealCellAndUpdate(pos);
     }
 
     /**
