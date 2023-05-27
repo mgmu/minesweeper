@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Dimension;
 
+import java.util.ArrayList;
+
 class GridTest {
 
     @Test
@@ -51,12 +53,14 @@ class GridTest {
     @Test
     void gridWith5MinesHas5Mines() {
         Grid sut = new Grid(10, 4, 5);
+        sut.placeMines(new ArrayList<>());
         assertEquals(5, sut.mines());
     }
 
     @Test
     void gridWithoutMinesHas0Mines() {
         Grid sut = new Grid(40, 40, 0);
+        sut.placeMines(new ArrayList<>());
         assertEquals(0, sut.mines());
     }
 

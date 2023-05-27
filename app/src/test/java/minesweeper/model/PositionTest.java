@@ -104,36 +104,38 @@ class PositionTest {
     @Test
     void negativeNumberOfRandomPositionsToGenerateThrowsException() {
         assertThrows(IllegalArgumentException.class,
-                () -> Position.randomPositions(-1, 1, 1));
+                () -> Position.randomPositions(-1, 1, 1, new ArrayList<>()));
     }
 
     @Test
     void negativeOr0MaxLineForRandomPositionGenerationThrowsException() {
         assertThrows(IllegalArgumentException.class,
-                () -> Position.randomPositions(0, 0, 4));
+                () -> Position.randomPositions(0, 0, 4, new ArrayList<>()));
     }
 
     @Test
     void negativeOr0MaxColumnForRandomPositionGenerationThrowsException() {
         assertThrows(IllegalArgumentException.class,
-                () -> Position.randomPositions(1, 2, -12));
+                () -> Position.randomPositions(1, 2, -12, new ArrayList<>()));
     }
 
     @Test
     void morePositionsThanPossibleInRandomPositionsGenerationThrowsException() {
         assertThrows(IllegalArgumentException.class,
-                () -> Position.randomPositions(5, 2, 2));
+                () -> Position.randomPositions(5, 2, 2, new ArrayList<>()));
     }
 
     @Test
     void zeroPositionsToGenerateInRandomPositionsGenerationReturnsEmptyList() {
         List<Position> empty = new ArrayList<>();
-        assertEquals(empty, Position.randomPositions(0, 1, 1));
+        assertEquals(empty,
+                Position.randomPositions(0, 1, 1, new ArrayList<>()));
     }
 
     @Test
     void oneRandomPositionReturnsPositionInBounds() {
-        List<Position> positions = Position.randomPositions(1, 1, 1);
+        List<Position> positions = Position.randomPositions(1, 1, 1,
+                new ArrayList<>());
         assertEquals(Position.ORIGIN, positions.get(0));
     }
 
