@@ -6,6 +6,8 @@ import javax.swing.SwingUtilities;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import java.util.List;
+
 import minesweeper.model.Grid;
 import minesweeper.model.Position;
 import minesweeper.view.GridView;
@@ -78,8 +80,14 @@ public class GameController extends MouseInputAdapter {
 
         GridView gridView = (GridView) src;
         Position pos = this.positionOfClick(gridView, event);
-        if (pos != null)
+        if (pos != null) {
+            if (!this.model.isMined()) {
+                List<Position> excluded = pos.neighbors();
+                excluded.add(pos);
+                this.model.placeMines(excluded);
+            }
             this.actionOnMouseButton(event, pos);
+        }
     }
 
     @Override

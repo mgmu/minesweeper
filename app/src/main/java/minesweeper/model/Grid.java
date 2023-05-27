@@ -28,13 +28,19 @@ public class Grid implements Observable {
     // The observers of this Grid.
     private final List<Observer> observers;
 
+    // The number of mines to place on this Grid.
+    private final int mines;
+
+    // Indicates if mines have been placed on this Grid
+    private boolean isMined;
+
     /**
      * Class constructor that specifies the dimensions of the new Grid and the
-     * number of mines on the Grid. The Grid is initialized with the given
-     * number of mined cells.
+     * number of mines on the Grid. The Grid is not initialized with the given
+     * number of mined cells, call placeMines() in order to place them.
      * @param width the width of the new  Grid
      * @param height the height of the new Grid
-     * @param mines the number of mines on the new Grid
+     * @param mines the number of mines to place on the new Grid
      * @throws IllegalArgumentException if width, height or mines are strictly
      *         inferior to 0 or if mines is strictly superior to width * height
      */
@@ -50,10 +56,11 @@ public class Grid implements Observable {
         }
         this.width = width;
         this.height = height;
+        this.mines = mines;
+        this.isMined = false;
         this.cells = new ArrayList<>(nbCells);
         this.observers = new ArrayList<>();
         this.initializeCells();
-        this.placeMines(mines);
     }
 
     /**
@@ -78,16 +85,17 @@ public class Grid implements Observable {
                 this.cells.add(new Cell(Visibility.HIDDEN, 0, false, pos));
             }
         }
+        this.isMined = false;
     }
 
     /**
-     * Generetes mines random positions and places a mine on each corresponding
-     * cell. The other cells are left unmodified.
-     * @param mines the number of mines to place
+     * Generates mines random positions and places a mine at each generated
+     * position.
      */
-    public void placeMines(int mines) {
-        List<Position> positions = Position.randomPositions(mines, this.height,
-                this.width);
+    public void placeMines(List<Position> excluded) {
+        this.isMined = true;
+        List<Position> positions = Position.randomPositions(this.mines,
+                this.height, this.width, excluded);
         for (Position position: positions) {
             Cell cell = this.cellAt(position);
             cell.mine();
@@ -121,7 +129,9 @@ public class Grid implements Observable {
     }
 
     /**
-     * {@return the number of mines on this Grid}
+     * {@return the number of mines placed on this Grid}
+     * Note that this number might be different than the number of mines
+     * provided at construction.
      */
     public int mines() {
         int total = 0;
@@ -218,5 +228,12 @@ public class Grid implements Observable {
         Objects.requireNonNull(position);
         Cell cell = this.cellAt(position);
         return cell.flag();
+    }
+
+    /**
+     * {@return true if this Grid is mined}
+     */
+    public boolean isMined() {
+        return this.isMined;
     }
 }
