@@ -27,7 +27,7 @@ public class GameSettings extends JDialog {
     private static final int WIDTH_INCREMENT_SPINNER = 1;
     private static final String WIDTH_SPINNER_LABEL = "Width of the grid";    
 
-    private static final int DEFAULT_MINES = 99;
+    public static final int DEFAULT_MINES = 99;
     private static final int MIN_MINES = 0;
     private static final int MAX_MINES = MAX_HEIGHT * MAX_WIDTH;
     private static final int MINES_INCREMENT_SPINNER = 1;

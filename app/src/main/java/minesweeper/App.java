@@ -60,7 +60,7 @@ public class App {
 
         // The model
         model = new Grid(GameSettings.DEFAULT_WIDTH,
-                GameSettings.DEFAULT_HEIGHT);
+                GameSettings.DEFAULT_HEIGHT, GameSettings.DEFAULT_MINES);
         model.add(gridView);
 
         // The controller

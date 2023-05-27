@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Objects;
 
 /**
  * A Position represents the line and column coordinates of an element inside a
@@ -33,30 +34,38 @@ public record Position(int line, int column) {
      * {@return a list of the neighbor Positions of this Position}
      */
     public List<Position> neighbors() {
-        if (this.equals(Position.ORIGIN))
-            return Arrays.asList(new Position(0, 1), new Position(1, 1),
-                    new Position(1, 0));
-        if (this.line == 0 && this.column > 0)
-            return Arrays.asList(new Position(this.line, this.column + 1),
-                    new Position(this.line + 1, this.column + 1),
-                    new Position(this.line + 1, this.column),
-                    new Position(this.line + 1, this.column - 1),
-                    new Position(this.line, this.column -1));
-        else if (this.line > 0 && this.column == 0)
-            return Arrays.asList(new Position(this.line - 1, this.column),
-                    new Position(this.line - 1, this.column + 1),
-                    new Position(this.line, this.column + 1),
-                    new Position(this.line + 1, this.column + 1),
-                    new Position(this.line + 1, this.column));
-        else
-            return Arrays.asList(new Position(this.line - 1, this.column - 1),
-                    new Position(this.line - 1, this.column),
-                    new Position(this.line - 1, this.column + 1),
-                    new Position(this.line, this.column + 1),
-                    new Position(this.line + 1, this.column + 1),
-                    new Position(this.line + 1, this.column),
-                    new Position(this.line + 1, this.column - 1),
-                    new Position(this.line, this.column - 1));
+        List<Position> res = new ArrayList<>();
+        if (this.equals(Position.ORIGIN)) {
+            res.add(new Position(0, 1));
+            res.add(new Position(1, 1));
+            res.add(new Position(1, 0));
+            return res;
+        }
+        if (this.line == 0 && this.column > 0) {
+            res.add(new Position(this.line, this.column + 1));
+            res.add(new Position(this.line + 1, this.column + 1));
+            res.add(new Position(this.line + 1, this.column));
+            res.add(new Position(this.line + 1, this.column - 1));
+            res.add(new Position(this.line, this.column -1));
+            return res;
+        } else if (this.line > 0 && this.column == 0) {
+            res.add(new Position(this.line - 1, this.column));
+            res.add(new Position(this.line - 1, this.column + 1));
+            res.add(new Position(this.line, this.column + 1));
+            res.add(new Position(this.line + 1, this.column + 1));
+            res.add(new Position(this.line + 1, this.column));
+            return res;
+        } else {
+            res.add(new Position(this.line - 1, this.column - 1));
+            res.add(new Position(this.line - 1, this.column));
+            res.add(new Position(this.line - 1, this.column + 1));
+            res.add(new Position(this.line, this.column + 1));
+            res.add(new Position(this.line + 1, this.column + 1));
+            res.add(new Position(this.line + 1, this.column));
+            res.add(new Position(this.line + 1, this.column - 1));
+            res.add(new Position(this.line, this.column - 1));
+            return res;
+        }
     }
 
     /**
@@ -65,11 +74,15 @@ public record Position(int line, int column) {
      * @param n the number of random positions to generate
      * @param maxL the maximum line coordinate value
      * @param maxC the maximum column coordinate value
+     * @param excluded a list of positions that can not be chosen
      * @throws IllegalArgumentException if n is strictly inferior to 0, if maxL
      *         or maxC are inferior to 0 or if n is strictly superior to
      *         maxL * maxC
+     * @throws NullPointerException if excluded is null
      */
-    public static List<Position> randomPositions(int n, int maxL, int maxC) {
+    public static List<Position> randomPositions(int n, int maxL, int maxC,
+            List<Position> excluded) {
+        Objects.requireNonNull(excluded);
         if (maxL < 1 || maxC < 1) {
             throw new IllegalArgumentException(
               String.format("Illegal maximum values: %d, %d", maxL, maxC));
@@ -84,7 +97,8 @@ public record Position(int line, int column) {
             Position position;
             do {
                 position = new Position(rand.nextInt(maxL), rand.nextInt(maxC));
-            } while (positions.contains(position));
+            } while (positions.contains(position)
+                    || excluded.contains(position));
             positions.add(position);
         }
         return positions;
