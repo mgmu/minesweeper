@@ -1,6 +1,7 @@
 package minesweeper.view;
 
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -53,6 +54,8 @@ public class GridView extends JPanel implements Observer {
         this.model = model;
         this.currentGridDim = this.model.dimension();
         this.repaint();
+        if (this.model.hasMineRevealed())
+            this.displayEndGameDialog();
     }
 
     /**
@@ -156,5 +159,11 @@ public class GridView extends JPanel implements Observer {
                 g2d.draw(new Rectangle2D.Double(j * l, i * l, l, l));
             }
         }
+    }
+
+    // Displays the end game dialog
+    public void displayEndGameDialog() {
+        JOptionPane.showInternalMessageDialog(null, "The game has ended",
+                "Game ended", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -79,4 +79,22 @@ class CellTest {
         Cell sut = new Cell(Visibility.HIDDEN, 3, true, Position.ORIGIN);
         assertTrue(sut.isHidden());
     }
+
+    @Test
+    void isRevealedCellWhenHiddenReturnsFalse() {
+        Cell sut = new Cell(Visibility.HIDDEN, 5, false, new Position(4, 4));
+        assertFalse(sut.isRevealed());
+    }
+
+    @Test
+    void isRevealedCellWhenFlaggedReturnsFalse() {
+        Cell sut = new Cell(Visibility.FLAGGED, 0, true, new Position(2, 7));
+        assertFalse(sut.isRevealed());
+    }
+
+    @Test
+    void isRevealedCellWhenRevealedReturnsTrue() {
+        Cell sut = new Cell(Visibility.REVEALED, 4, true, new Position(8, 8));
+        assertTrue(sut.isRevealed());
+    }
 }

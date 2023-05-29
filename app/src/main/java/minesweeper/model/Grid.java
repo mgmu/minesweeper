@@ -236,4 +236,16 @@ public class Grid implements Observable {
     public boolean isMined() {
         return this.isMined;
     }
+
+    /**
+     * {@return true if at least one of the revealed cells of this Grid is
+     * mined}
+     */
+    public boolean hasMineRevealed() {
+        for (Cell cell: this.cells) {
+            if (cell.isRevealed() && cell.isMined())
+                return true;
+        }
+        return false;
+    }
 }

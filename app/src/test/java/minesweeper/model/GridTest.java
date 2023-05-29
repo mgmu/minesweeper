@@ -100,4 +100,28 @@ class GridTest {
         sut.flagCellAt(position);
         assertTrue(sut.flagCellAt(position));
     }
+
+    @Test
+    void gridWithoutRevealedCellsReturnFalse() {
+        Grid sut = new Grid(4, 4);
+        assertFalse(sut.hasMineRevealed());
+    }
+
+    @Test
+    void gridWithoudMinesAndRevealedCellsReturnsFalse() {
+        Grid sut = new Grid(2, 2);
+        sut.revealCellAt(Position.ORIGIN);
+        sut.revealCellAt(new Position(0, 1));
+        sut.revealCellAt(new Position(1, 0));
+        sut.revealCellAt(new Position(1, 1));
+        assertFalse(sut.hasMineRevealed());
+    }
+
+    @Test
+    void gridFullyMinedReturnsTrueWhenMineRevealedFromTheFirstReveal() {
+        Grid sut = new Grid(4, 4, 16);
+        sut.placeMines(new ArrayList<>());
+        sut.revealCellAt(Position.ORIGIN);
+        assertTrue(sut.hasMineRevealed());
+    }
 }

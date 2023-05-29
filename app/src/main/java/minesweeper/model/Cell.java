@@ -141,4 +141,11 @@ public class Cell {
         }
         return false;
     }
+
+    /**
+     * {@return true if the visibility of this Cell is Visibility.REVEALED}
+     */
+    public boolean isRevealed() {
+        return this.visibility == Visibility.REVEALED;
+    }
 }
