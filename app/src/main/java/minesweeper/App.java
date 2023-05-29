@@ -64,7 +64,7 @@ public class App {
         model.add(gridView);
 
         // The controller
-        gameController = new GameController(model);
+        gameController = new GameController(model, this);
         gridView.addMouseListener(gameController);
         gridView.addMouseMotionListener(gameController);
 
@@ -75,6 +75,7 @@ public class App {
         frame.setVisible(true);
     }
 
+    // Displays a dialog and waits for user to provide game settings
     private void askGameParameters() {
         GameSettings settings = new GameSettings();
         settings.setVisible(true);

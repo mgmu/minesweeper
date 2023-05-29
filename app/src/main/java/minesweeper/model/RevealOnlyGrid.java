@@ -53,4 +53,12 @@ public record RevealOnlyGrid(Grid grid) {
     public Cell cellAt(Position position) {
         return this.grid.cellAt(position);
     }
+
+    /**
+     * {@return true if at least one of the revealed cells of this Grid is
+     * mined}
+     */
+    public boolean hasMineRevealed() {
+        return this.grid.hasMineRevealed();
+    }
 }

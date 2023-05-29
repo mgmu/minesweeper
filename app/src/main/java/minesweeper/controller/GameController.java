@@ -11,6 +11,7 @@ import java.util.List;
 import minesweeper.model.Grid;
 import minesweeper.model.Position;
 import minesweeper.view.GridView;
+import minesweeper.App;
 
 /**
  * Controls the user input on the View. The actions provided by the
@@ -18,19 +19,24 @@ import minesweeper.view.GridView;
  */
 public class GameController extends MouseInputAdapter {
 
-    // The model to act on
+    // The model to act on.
     private Grid model;
 
-    // The previous time of flag placement
-    private long previousClick;
+    // The app.
+    private App app;
+
+    // Indicates if this GameController is enabled.
+    private boolean enabled;
 
     /**
      * Class constructor that specifies the grid to act on.
      * @param model the grid to act on
      */
-    public GameController(Grid model) {
+    public GameController(Grid model, App app) {
         this.model = model;
+        this.app = app;
         this.model.notifyObservers();
+        this.setEnabled();
     }
 
     // Reveals the cell at position, and if it was indeed revealed, notifies
@@ -42,9 +48,8 @@ public class GameController extends MouseInputAdapter {
 
     // Flags the cell at position, and if it changed, notifies observers
     private void flagCellAndUpdate(Position position) {
-        if (this.model.flagCellAt(position)) {
+        if (this.model.flagCellAt(position))
             this.model.notifyObservers();
-        }
     }
 
     // Acts on model depending on button activated
@@ -92,6 +97,9 @@ public class GameController extends MouseInputAdapter {
         if (!(src instanceof GridView))
             return;
 
+        if (!this.enabled)
+            return;
+
         GridView gridView = (GridView) src;
         Position pos = this.positionOfClick(gridView, event);
         if (pos != null) {
@@ -102,6 +110,8 @@ public class GameController extends MouseInputAdapter {
             }
             this.actionOnMouseButton(event, pos);
         }
+        if (this.model.hasMineRevealed())
+            this.enabled = false;
     }
 
     @Override
@@ -110,10 +120,15 @@ public class GameController extends MouseInputAdapter {
         if (!(src instanceof GridView))
             return;
 
+        if (!this.enabled)
+            return;
+
         GridView gridView = (GridView) src;
         Position pos = this.positionOfClick(gridView, event);
         if (pos != null && SwingUtilities.isLeftMouseButton(event))
             this.revealCellAndUpdate(pos);
+        if (this.model.hasMineRevealed())
+            this.enabled = false;
     }
 
     /**
@@ -123,5 +138,15 @@ public class GameController extends MouseInputAdapter {
     public void setModel(Grid model) {
         this.model = model;
         this.model.notifyObservers();
+        this.setEnabled();
+    }
+
+    // Checks the state of the model and enables this GameController according
+    // to the result
+    private void setEnabled() {
+        if (this.model.hasMineRevealed())
+            this.enabled = false;
+        else
+            this.enabled = true;
     }
 }
