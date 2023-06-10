@@ -85,6 +85,7 @@ public class Grid {
     /**
      * Generates mines random positions and places a mine at each generated
      * position.
+     * @param excluded a list of positions that won't be selected
      */
     public void placeMines(List<Position> excluded) {
         this.isMined = true;

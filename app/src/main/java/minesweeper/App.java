@@ -26,13 +26,13 @@ public class App {
     // The frame of the GUI
     private final JFrame frame;
 
-    // The view of the model
+    // The view
     private GameView gameView;
 
     // The model
     private Game model;
 
-    // The model controller
+    // The controller
     private GameController gameController;
 
     /**

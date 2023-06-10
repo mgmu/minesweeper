@@ -10,10 +10,14 @@ import java.util.List;
  */
 public class Cell {
 
-    // Minimum number of mines around a Cell
+    /**
+     * Minimum number of mines around a Cell
+     */
     public static final int MIN_MINES_AROUND = 0;
 
-    // Maximum number of mines around a Cell
+    /**
+     * Maximum number of mines around a Cell
+     */
     public static final int MAX_MINES_AROUND = 8;
 
     // The visibility of this Cell.
@@ -39,6 +43,7 @@ public class Cell {
      * @throws IllegalArgumentException if minesAround is strictly inferior to
      *                                  MIN_MINES_AROUND or strictly superior to
      *                                  MAX_MINES_AROUND
+     * @throws NullPointerException if visibility or position are null
      */
     public Cell(Visibility visibility, int minesAround, boolean isMined,
             Position position) {
