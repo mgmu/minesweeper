@@ -21,7 +21,7 @@ import minesweeper.model.Visibility;
 /**
  * The graphical representation of the Grid
  */
-public class GridView extends JPanel implements Observer {
+public class GridView extends JPanel {
 
     // The grid to represent.
     private RevealOnlyGrid model;
@@ -46,16 +46,16 @@ public class GridView extends JPanel implements Observer {
         this.previousGridDim = null;
         this.currentGridDim = null;
         this.centerPoints = null;
-        this.setPreferredSize(new Dimension(1000, 800));
+        this.setLayout(null);
     }
 
-    @Override
-    public void update(RevealOnlyGrid model) {
+    public void setModel(RevealOnlyGrid model) {
         this.model = model;
-        this.currentGridDim = this.model.dimension();
-        this.repaint();
-        if (this.model.hasMineRevealed())
-            this.displayEndGameDialog();
+        this.currentGridDim = this.model.dimension();        
+    }
+
+    public RevealOnlyGrid model() {
+        return this.model;
     }
 
     /**
@@ -159,11 +159,5 @@ public class GridView extends JPanel implements Observer {
                 g2d.draw(new Rectangle2D.Double(j * l, i * l, l, l));
             }
         }
-    }
-
-    // Displays the end game dialog
-    public void displayEndGameDialog() {
-        JOptionPane.showInternalMessageDialog(null, "The game has ended",
-                "Game ended", JOptionPane.INFORMATION_MESSAGE);
     }
 }

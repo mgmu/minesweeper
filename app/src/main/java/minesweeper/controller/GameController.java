@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 
 import java.util.List;
 
-import minesweeper.model.Grid;
+import minesweeper.model.Game;
 import minesweeper.model.Position;
 import minesweeper.view.GridView;
 import minesweeper.App;
@@ -18,9 +18,7 @@ import minesweeper.App;
  * View are executed on the encapsulated model.
  */
 public class GameController extends MouseInputAdapter {
-
-    // The model to act on.
-    private Grid model;
+    private Game model;
 
     // The app.
     private App app;
@@ -32,7 +30,7 @@ public class GameController extends MouseInputAdapter {
      * Class constructor that specifies the grid to act on.
      * @param model the grid to act on
      */
-    public GameController(Grid model, App app) {
+    public GameController(Game model, App app) {
         this.model = model;
         this.app = app;
         this.model.notifyObservers();
@@ -135,7 +133,7 @@ public class GameController extends MouseInputAdapter {
      * Sets the new model of this GameController.
      * @param model the new model
      */
-    public void setModel(Grid model) {
+    public void setModel(Game model) {
         this.model = model;
         this.model.notifyObservers();
         this.setEnabled();

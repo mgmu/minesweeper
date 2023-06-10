@@ -11,8 +11,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 import minesweeper.view.GridView;
+import minesweeper.view.GameView;
 import minesweeper.view.GameSettings;
 import minesweeper.model.Grid;
+import minesweeper.model.RevealOnlyGrid;
+import minesweeper.model.Game;
 import minesweeper.controller.GameController;
 
 /**
@@ -23,13 +26,13 @@ public class App {
     // The frame of the GUI
     private final JFrame frame;
 
-    // The view of the model
-    private GridView gridView;
+    // The view
+    private GameView gameView;
 
     // The model
-    private Grid model;
+    private Game model;
 
-    // The model controller
+    // The controller
     private GameController gameController;
 
     /**
@@ -55,16 +58,16 @@ public class App {
         menuBar.add(gameMenu);
 
         // The view
-        gridView = new GridView();
-        frame.getContentPane().add(gridView);
+        gameView = new GameView();
+        frame.getContentPane().add(gameView);
 
         // The model
-        model = new Grid(GameSettings.DEFAULT_WIDTH,
-                GameSettings.DEFAULT_HEIGHT, GameSettings.DEFAULT_MINES);
-        model.add(gridView);
+        model = new Game();
+        model.add(gameView);
 
         // The controller
         gameController = new GameController(model, this);
+        GridView gridView = gameView.gridView();
         gridView.addMouseListener(gameController);
         gridView.addMouseMotionListener(gameController);
 
@@ -80,9 +83,9 @@ public class App {
         GameSettings settings = new GameSettings();
         settings.setVisible(true);
         if (!settings.canceled()) {
-            model = new Grid(settings.width(), settings.height(),
-                    settings.mines());
-            model.add(gridView);
+            model = new Game(
+              new Grid(settings.width(), settings.height(), settings.mines()));
+            model.add(gameView);
             gameController.setModel(model);
         }
     }
