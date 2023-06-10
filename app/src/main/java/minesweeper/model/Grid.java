@@ -8,13 +8,11 @@ import java.util.ArrayDeque;
 
 import java.awt.Dimension;
 
-import minesweeper.view.Observer;
-
 /**
  * A Grid encapsulates cells placed in order to form a grid of certain width and
  * height.
  */
-public class Grid implements Observable {
+public class Grid {
 
     // The width of this Grid.
     private final int width;
@@ -24,9 +22,6 @@ public class Grid implements Observable {
 
     // The cells of this Grid.
     private final List<Cell> cells;
-
-    // The observers of this Grid.
-    private final List<Observer> observers;
 
     // The number of mines to place on this Grid.
     private final int mines;
@@ -59,7 +54,6 @@ public class Grid implements Observable {
         this.mines = mines;
         this.isMined = false;
         this.cells = new ArrayList<>(nbCells);
-        this.observers = new ArrayList<>();
         this.initializeCells();
     }
 
@@ -140,18 +134,6 @@ public class Grid implements Observable {
                 total++;
         }
         return total;
-    }
-
-    @Override
-    public void add(Observer observer) {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer: this.observers) {
-            observer.update(new RevealOnlyGrid(this));
-        }
     }
 
     /**

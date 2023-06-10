@@ -12,33 +12,26 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.Frame;
 import java.awt.Dimension;
 
+import minesweeper.model.Game;
+
 public class GameSettings extends JDialog {
     private static final String DIALOG_TITLE = "Settings";
 
-    public static final int DEFAULT_HEIGHT = 16;
-    private static final int MIN_HEIGHT = 1;
-    private static final int MAX_HEIGHT = 256;
     private static final int HEIGHT_INCREMENT_SPINNER = 1;
     private static final String HEIGHT_SPINNER_LABEL = "Height of the grid";
 
-    public static final int DEFAULT_WIDTH = 30;
-    private static final int MIN_WIDTH = 1;
-    private static final int MAX_WIDTH = 256;
     private static final int WIDTH_INCREMENT_SPINNER = 1;
     private static final String WIDTH_SPINNER_LABEL = "Width of the grid";    
 
-    public static final int DEFAULT_MINES = 99;
-    private static final int MIN_MINES = 0;
-    private static final int MAX_MINES = MAX_HEIGHT * MAX_WIDTH;
     private static final int MINES_INCREMENT_SPINNER = 1;
     private static final String MINES_SPINNER_LABEL = "Mines on the grid";
 
     private static final String OK_BUTTON_LABEL = "OK";
     private static final String CANCEL_BUTTON_LABEL = "Cancel";
 
-    private int mines = DEFAULT_MINES;
-    private int height = DEFAULT_HEIGHT;
-    private int width = DEFAULT_WIDTH;
+    private int mines = Game.DEFAULT_MINES;
+    private int height = Game.DEFAULT_HEIGHT;
+    private int width = Game.DEFAULT_WIDTH;
     private boolean canceled = false;
 
     public GameSettings() {
@@ -51,20 +44,20 @@ public class GameSettings extends JDialog {
 
         // Number of mines spinner
         JPanel minesPanel = new JPanel();
-        SpinnerModel minesModel = new SpinnerNumberModel(DEFAULT_MINES,
-                MIN_MINES, MAX_MINES, MINES_INCREMENT_SPINNER);
+        SpinnerModel minesModel = new SpinnerNumberModel(Game.DEFAULT_MINES,
+                Game.MIN_MINES, Game.MAX_MINES, MINES_INCREMENT_SPINNER);
         this.addLabeledSpinner(minesPanel, MINES_SPINNER_LABEL, minesModel);
 
         // Height of grid spinner
         JPanel heightPanel = new JPanel();
-        SpinnerModel heightModel = new SpinnerNumberModel(DEFAULT_HEIGHT,
-                MIN_HEIGHT, MAX_HEIGHT, HEIGHT_INCREMENT_SPINNER);
+        SpinnerModel heightModel = new SpinnerNumberModel(Game.DEFAULT_HEIGHT,
+                Game.MIN_HEIGHT, Game.MAX_HEIGHT, HEIGHT_INCREMENT_SPINNER);
         this.addLabeledSpinner(heightPanel, HEIGHT_SPINNER_LABEL, heightModel);
 
         // Width of grid spinner
         JPanel widthPanel = new JPanel();
-        SpinnerModel widthModel = new SpinnerNumberModel(DEFAULT_WIDTH,
-                MIN_WIDTH, MAX_WIDTH, WIDTH_INCREMENT_SPINNER);
+        SpinnerModel widthModel = new SpinnerNumberModel(Game.DEFAULT_WIDTH,
+                Game.MIN_WIDTH, Game.MAX_WIDTH, WIDTH_INCREMENT_SPINNER);
         this.addLabeledSpinner(widthPanel, WIDTH_SPINNER_LABEL, widthModel);
 
         // Buttons panel
