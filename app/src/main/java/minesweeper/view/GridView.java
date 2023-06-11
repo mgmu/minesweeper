@@ -23,19 +23,29 @@ import minesweeper.model.Visibility;
  */
 public class GridView extends JPanel {
 
-    // The grid to represent.
+    /**
+     * The grid model to display.
+     */
     private RevealOnlyGrid model;
 
-    // The previous grid dimension
+    /**
+     * The previous grid dimensions.
+     */
     private Dimension previousGridDim;
 
-    // The current grid dimension
+    /**
+     * The current grid dimensions.
+     */
     private Dimension currentGridDim;
 
-    // The center points of the cells of the grid
+    /**
+     * The center points of the cells of the grid.
+     */
     private Point[][] centerPoints;
 
-    // Font size for number of mines around a cell
+    /**
+     * Font size for number of mines around a cell.
+     */
     private static final int FONT_SIZE = 15;
 
     /**
@@ -49,11 +59,19 @@ public class GridView extends JPanel {
         this.setLayout(null);
     }
 
+    /**
+     * Sets the new model of this GridView and updates the current grid
+     * dimensions.
+     * @param model the new model
+     */
     public void setModel(RevealOnlyGrid model) {
         this.model = model;
         this.currentGridDim = this.model.dimension();        
     }
 
+    /**
+     * {@return the model of this GridView}
+     */
     public RevealOnlyGrid model() {
         return this.model;
     }

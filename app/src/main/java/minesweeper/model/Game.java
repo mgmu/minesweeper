@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * Represents a game of minesweeper.
  */
 public class Game implements Observable {
+
+    // The grid of this Game
     private final Grid grid;
 
     /**

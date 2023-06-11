@@ -107,6 +107,8 @@ public record Position(int line, int column) {
     /**
      * {@return true if this Position is inside the matrix of size width *
      * height}
+     * @param width the width of the matrix
+     * @param height the height of the matrix
      */
     public boolean inBounds(int width, int height) {
         if (width < 1 || height < 1) {

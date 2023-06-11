@@ -29,6 +29,7 @@ public class GameController extends MouseInputAdapter {
     /**
      * Class constructor that specifies the grid to act on.
      * @param model the grid to act on
+     * @param app the main application
      */
     public GameController(Game model, App app) {
         this.model = model;

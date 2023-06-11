@@ -14,6 +14,9 @@ import java.awt.Dimension;
 
 import minesweeper.model.Game;
 
+/**
+ * Represents the game settings dialog.
+ */
 public class GameSettings extends JDialog {
     private static final String DIALOG_TITLE = "Settings";
 
@@ -29,11 +32,29 @@ public class GameSettings extends JDialog {
     private static final String OK_BUTTON_LABEL = "OK";
     private static final String CANCEL_BUTTON_LABEL = "Cancel";
 
+    /**
+     * The initial number of mines to place on the grid.
+     */
     private int mines = Game.DEFAULT_MINES;
+
+    /**
+     * The initial height of the grid.
+     */
     private int height = Game.DEFAULT_HEIGHT;
+
+    /**
+     * The initial width of the grid.
+     */
     private int width = Game.DEFAULT_WIDTH;
+
+    /**
+     * Indicates if the values of the settings have to be ignored.
+     */
     private boolean canceled = false;
 
+    /**
+     * Class constructor that creates the game settings dialog.
+     */
     public GameSettings() {
         super((Frame)null, DIALOG_TITLE, true);
 

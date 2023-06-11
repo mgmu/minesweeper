@@ -9,9 +9,19 @@ import minesweeper.model.RevealOnlyGrid;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 
+/**
+ * Defines the view of a Game.
+ */
 public class GameView extends JPanel implements Observer {
+    
+    /**
+     * The grid view of this GameView.
+     */
     private final GridView gridView;
 
+    /**
+     * Class constructor that displays the grid at its center.
+     */
     public GameView() {
         this.gridView = new GridView();
         this.setLayout(new BorderLayout());
@@ -28,11 +38,14 @@ public class GameView extends JPanel implements Observer {
     }
 
     // Displays the end game dialog
-    public void displayEndGameDialog() {
+    private void displayEndGameDialog() {
         JOptionPane.showInternalMessageDialog(null, "The game has ended",
                 "Game ended", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * {@return the grid view of this GameView}
+     */
     public GridView gridView() {
         return this.gridView;
     }
