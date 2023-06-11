@@ -9,7 +9,7 @@ public interface Observer {
 
     /**
      * Updates this Observer with the new state of the observed object.
-     * @param rog the new state of the observed RevealOnlyGrid
+     * @param game the new state of the observed Game
      */
     void update(Game game);
 }
