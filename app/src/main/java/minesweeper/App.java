@@ -44,7 +44,7 @@ public class App {
     public App() {
 
         // The frame of the application
-        frame = new JFrame("Minesweeper");
+        frame = new JFrame("FreeMines");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // The menu bar of the application
