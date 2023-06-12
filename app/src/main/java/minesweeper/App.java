@@ -35,6 +35,9 @@ public class App {
     // The controller
     private GameController gameController;
 
+    // The game settings
+    private GameSettings settings;
+
     /**
      * Class constructor that initializes the GUI.
      */
@@ -71,6 +74,9 @@ public class App {
         gridView.addMouseListener(gameController);
         gridView.addMouseMotionListener(gameController);
 
+        // The game settings
+        settings = new GameSettings();
+
         // Display
         frame.setJMenuBar(menuBar);
         frame.pack();
@@ -80,9 +86,8 @@ public class App {
 
     // Displays a dialog and waits for user to provide game settings
     private void askGameParameters() {
-        GameSettings settings = new GameSettings();
-        settings.setVisible(true);
-        if (!settings.canceled()) {
+        this.settings.setVisible(true);
+        if (!this.settings.canceled()) {
             model = new Game(
               new Grid(settings.width(), settings.height(), settings.mines()));
             model.add(gameView);
