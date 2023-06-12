@@ -38,7 +38,6 @@ public class GameView extends JPanel implements Observer {
 
         this.add(panel, BorderLayout.PAGE_START);
         this.add(gridView, BorderLayout.CENTER);
-        this.setPreferredSize(new Dimension(1000, 800));
     }
 
     @Override

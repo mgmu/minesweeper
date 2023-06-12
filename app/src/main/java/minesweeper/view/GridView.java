@@ -57,6 +57,7 @@ public class GridView extends JPanel {
         this.currentGridDim = null;
         this.centerPoints = null;
         this.setLayout(null);
+        this.setPreferredSize(new Dimension(1000, 800));
     }
 
     /**
