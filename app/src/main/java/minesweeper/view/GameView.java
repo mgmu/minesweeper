@@ -55,7 +55,7 @@ public class GameView extends JPanel implements Observer {
         newLabel.append(unflagged);
         this.unflaggedMinesLabel.setText(newLabel.toString());
         this.gridView.repaint();
-        if (model.hasMineRevealed())
+        if (this.model.hasEnded())
             this.displayEndGameDialog();
     }
 
