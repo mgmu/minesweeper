@@ -124,11 +124,18 @@ public class Grid {
     }
 
     /**
+     * {@return the number of mines to place on this Grid}
+     */
+    public int mines() {
+        return this.mines;
+    }
+
+    /**
      * {@return the number of mines placed on this Grid}
      * Note that this number might be different than the number of mines
      * provided at construction.
      */
-    public int mines() {
+    public int minesPlaced() {
         int total = 0;
         for (Cell cell: this.cells) {
             if (cell.isMined())

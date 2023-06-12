@@ -10,9 +10,6 @@ import java.util.ArrayList;
  */
 public class Game implements Observable {
 
-    // The grid of this Game
-    private final Grid grid;
-
     /**
      * Default height of the grid of a Game.
      */
@@ -43,7 +40,6 @@ public class Game implements Observable {
      */
     public static final int MAX_WIDTH = 256;
 
-
     /**
      * Default number of mines on the grid of a Game.
      */
@@ -59,16 +55,25 @@ public class Game implements Observable {
      */
     public static final int MAX_MINES = MAX_HEIGHT * MAX_WIDTH;
 
+    // The grid of this Game
+    private final Grid grid;
+
     // The observers of this Game.
     private final List<Observer> observers;
 
     /**
-     * Class constructor that initialized the grid to its default dimensions and
+     * The number of unflagged mines.
+     */
+    private int unflaggedMines;
+
+    /**
+     * Class constructor that initializes the grid to its default dimensions and
      * number of mines.
      */
     public Game() {
         this.grid = new Grid(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINES);
         this.observers = new ArrayList<>();
+        this.unflaggedMines = DEFAULT_MINES;
     }
 
     /**
@@ -78,6 +83,7 @@ public class Game implements Observable {
     public Game(Grid grid) {
         this.grid = grid;
         this.observers = new ArrayList<>();
+        this.unflaggedMines = this.grid.mines();
     }
 
     /**
@@ -124,7 +130,15 @@ public class Game implements Observable {
      * @param position the position of the cell to flag or unflag
      */
     public boolean flagCellAt(Position position) {
-        return this.grid.flagCellAt(position);
+        boolean res = this.grid.flagCellAt(position);
+        if (res) {
+            Cell cell = this.grid.cellAt(position);
+            if (cell.isFlagged())
+                this.unflaggedMines--;
+            else
+                this.unflaggedMines++;
+        }
+        return res;
     }
 
     /**
@@ -135,11 +149,18 @@ public class Game implements Observable {
     }
 
     /**
-     * Generates mines random positions and places a mine at each generated
-     * position on the grid of this Game.
+     * Places the number of mines to place on the grid of this Game at random
+     * positions, excluding the positions provided.
      * @param excluded a list of positions that won't be selected
      */
     public void placeMines(List<Position> excluded) {
         this.grid.placeMines(excluded);
+    }
+
+    /**
+     * {@return the number of unflagged mines on the grid of this Game}
+     */
+    public int unflaggedMines() {
+        return this.unflaggedMines;
     }
 }

@@ -1,6 +1,7 @@
 package minesweeper.view;
 
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import minesweeper.model.Game;
@@ -20,11 +21,22 @@ public class GameView extends JPanel implements Observer {
     private final GridView gridView;
 
     /**
+     * Displays the number of unflagged mines.
+     */
+    private final JLabel unflaggedMinesLabel;
+
+    /**
      * Class constructor that displays the grid at its center.
      */
     public GameView() {
         this.gridView = new GridView();
+        this.unflaggedMinesLabel = new JLabel();
         this.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel();
+        panel.add(unflaggedMinesLabel);
+
+        this.add(panel, BorderLayout.PAGE_START);
         this.add(gridView, BorderLayout.CENTER);
         this.setPreferredSize(new Dimension(1000, 800));
     }
@@ -32,6 +44,10 @@ public class GameView extends JPanel implements Observer {
     @Override
     public void update(Game model) {
         this.gridView.setModel(new RevealOnlyGrid(model.grid()));
+        int unflagged = model.unflaggedMines();
+        StringBuilder newLabel = new StringBuilder();
+        newLabel.append(unflagged);
+        this.unflaggedMinesLabel.setText(newLabel.toString());
         this.gridView.repaint();
         if (model.hasMineRevealed())
             this.displayEndGameDialog();

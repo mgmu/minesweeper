@@ -153,4 +153,11 @@ public class Cell {
     public boolean isRevealed() {
         return this.visibility == Visibility.REVEALED;
     }
+
+    /**
+     * {@return true if the visibility of this Cell is Visibility.FLAGGED}
+     */
+    public boolean isFlagged() {
+        return this.visibility == Visibility.FLAGGED;
+    }
 }
