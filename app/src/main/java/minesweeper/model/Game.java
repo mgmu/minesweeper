@@ -72,6 +72,11 @@ public class Game implements Observable {
     private boolean started;
 
     /**
+     * Indicates if this Game has ended.
+     */
+    private boolean ended;
+
+    /**
      * The start time of this Game.
      */
     private long startTime;
@@ -91,6 +96,7 @@ public class Game implements Observable {
         this.unflaggedMines = DEFAULT_MINES;
         this.startTime = -1L;
         this.started = false;
+        this.ended = false;
     }
 
     /**
@@ -103,6 +109,7 @@ public class Game implements Observable {
         this.unflaggedMines = this.grid.mines();
         this.startTime = -1L;
         this.started = false;
+        this.ended = false;
     }
 
     /**
@@ -140,15 +147,20 @@ public class Game implements Observable {
      * @throws NullPointerException if position is null
      */
     public boolean revealCellAt(Position position) {
+        if (this.ended)
+            return false;
         boolean res = this.grid.revealCellAt(position);
         if (!this.started) {
             this.started = true;
+            this.ended = false;
             this.startTime = System.currentTimeMillis();
         }
         if (res) {
             Cell cell = this.grid.cellAt(position);
-            if (cell.isMined() || this.grid.isCompleted())
+            if (cell.isMined() || this.grid.isCompleted()) {
                 this.endTime = System.currentTimeMillis();
+                this.ended = true;
+            }
         }
         return res;
     }
@@ -159,6 +171,8 @@ public class Game implements Observable {
      * @param position the position of the cell to flag or unflag
      */
     public boolean flagCellAt(Position position) {
+        if (this.ended)
+            return false;
         boolean res = this.grid.flagCellAt(position);
         if (res) {
             Cell cell = this.grid.cellAt(position);
@@ -204,5 +218,13 @@ public class Game implements Observable {
         if (!this.started)
             return -1L;
         return (endTime - startTime) / 1000L;
+    }
+
+    /**
+     * {@return true if the grid of this Game has a mine revealed or all and
+     * only the safe cells have been revealed}
+     */
+    public boolean hasEnded() {
+        return this.ended;
     }
 }
