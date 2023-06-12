@@ -238,4 +238,20 @@ public class Grid {
         }
         return false;
     }
+
+    /**
+     * {@return true if all and only the safe cells of this Grid are revealed}
+     */
+    public boolean isCompleted() {
+        for (Cell cell: this.cells) {
+            if (cell.isMined()) {
+                if (cell.isRevealed())
+                    return false;
+            } else {
+                if (cell.isHidden() || cell.isFlagged())
+                    return false;
+            }
+        }
+        return true;
+    }
 }

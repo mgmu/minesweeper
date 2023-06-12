@@ -26,10 +26,16 @@ public class GameView extends JPanel implements Observer {
     private final JLabel unflaggedMinesLabel;
 
     /**
+     * The model of this GameView.
+     */
+    private Game model;
+
+    /**
      * Class constructor that displays the grid at its center.
      */
     public GameView() {
         this.gridView = new GridView();
+        this.model = null;
         this.unflaggedMinesLabel = new JLabel();
         this.setLayout(new BorderLayout());
 
@@ -42,6 +48,7 @@ public class GameView extends JPanel implements Observer {
 
     @Override
     public void update(Game model) {
+        this.model = model;
         this.gridView.setModel(new RevealOnlyGrid(model.grid()));
         int unflagged = model.unflaggedMines();
         StringBuilder newLabel = new StringBuilder();
@@ -54,7 +61,14 @@ public class GameView extends JPanel implements Observer {
 
     // Displays the end game dialog
     private void displayEndGameDialog() {
-        JOptionPane.showInternalMessageDialog(null, "The game has ended",
+        StringBuilder builder = new StringBuilder();
+        builder.append("The game has ended\n");
+        builder.append("Time: ");
+        if (this.model != null)
+            builder.append(this.model.gameTime());
+        else
+            builder.append("0.0s");
+        JOptionPane.showInternalMessageDialog(null, builder.toString(),
                 "Game ended", JOptionPane.INFORMATION_MESSAGE);
     }
 

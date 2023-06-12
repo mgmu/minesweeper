@@ -62,9 +62,24 @@ public class Game implements Observable {
     private final List<Observer> observers;
 
     /**
-     * The number of unflagged mines.
+     * The number of unflagged mines on the grid of this Game.
      */
     private int unflaggedMines;
+
+    /**
+     * Indicates if this Game has started.
+     */
+    private boolean started;
+
+    /**
+     * The start time of this Game.
+     */
+    private long startTime;
+
+    /**
+     * The end time of this Game.
+     */
+    private long endTime;
 
     /**
      * Class constructor that initializes the grid to its default dimensions and
@@ -74,6 +89,8 @@ public class Game implements Observable {
         this.grid = new Grid(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINES);
         this.observers = new ArrayList<>();
         this.unflaggedMines = DEFAULT_MINES;
+        this.startTime = -1L;
+        this.started = false;
     }
 
     /**
@@ -84,6 +101,8 @@ public class Game implements Observable {
         this.grid = grid;
         this.observers = new ArrayList<>();
         this.unflaggedMines = this.grid.mines();
+        this.startTime = -1L;
+        this.started = false;
     }
 
     /**
@@ -121,7 +140,17 @@ public class Game implements Observable {
      * @throws NullPointerException if position is null
      */
     public boolean revealCellAt(Position position) {
-        return this.grid.revealCellAt(position);
+        boolean res = this.grid.revealCellAt(position);
+        if (!this.started) {
+            this.started = true;
+            this.startTime = System.currentTimeMillis();
+        }
+        if (res) {
+            Cell cell = this.grid.cellAt(position);
+            if (cell.isMined() || this.grid.isCompleted())
+                this.endTime = System.currentTimeMillis();
+        }
+        return res;
     }
 
     /**
@@ -137,6 +166,10 @@ public class Game implements Observable {
                 this.unflaggedMines--;
             else
                 this.unflaggedMines++;
+        }
+        if (!started) {
+            started = true;
+            startTime = System.currentTimeMillis();
         }
         return res;
     }
@@ -162,5 +195,14 @@ public class Game implements Observable {
      */
     public int unflaggedMines() {
         return this.unflaggedMines;
+    }
+
+    /**
+     * {@return the game time in seconds, -1 if this Game has not started}
+     */
+    public long gameTime() {
+        if (!this.started)
+            return -1L;
+        return (endTime - startTime) / 1000L;
     }
 }

@@ -124,4 +124,22 @@ class GridTest {
         sut.revealCellAt(Position.ORIGIN);
         assertTrue(sut.hasMineRevealed());
     }
+
+    @Test
+    void newGridIsNotCompleted() {
+        Grid sut = new Grid(4, 4, 5);
+        sut.placeMines(new ArrayList<>());
+        assertFalse(sut.isCompleted());
+    }
+
+    @Test
+    void gridWithoutMinesAndFullyRevealedIsCompleted() {
+        Grid sut = new Grid(2, 2, 0);
+        sut.placeMines(new ArrayList<>());
+        sut.revealCellAt(Position.ORIGIN);
+        sut.revealCellAt(new Position(0, 1));
+        sut.revealCellAt(new Position(1, 0));
+        sut.revealCellAt(new Position(1, 1));
+        assertTrue(sut.isCompleted());
+    }
 }
