@@ -1,8 +1,7 @@
 # FreeMines
 
-FreeMines is an implementation of the game [Minesweeper]
-(https://en.wikipedia.org/wiki/Minesweeper_(video_game)). It is fully developped
-in Java and the GUI was created with the Swing library.
+FreeMines is an implementation of the game [Minesweeper](https://en.wikipedia.org/wiki/Minesweeper_(video_game)).
+It is fully developped in Java and the GUI was created with the Swing library.
 
 ## Usage
 
