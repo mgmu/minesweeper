@@ -106,6 +106,8 @@ public class GameSettings extends JDialog {
         panel.add(buttonsPanel);
         this.add(panel);
         this.pack();
+        this.rootPane.setDefaultButton(okButton);
+        okButton.requestFocusInWindow();
     }
 
     // Creates a labeld spinner with the provided label and model and adds it to

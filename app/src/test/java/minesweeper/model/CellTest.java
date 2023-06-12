@@ -97,4 +97,22 @@ class CellTest {
         Cell sut = new Cell(Visibility.REVEALED, 4, true, new Position(8, 8));
         assertTrue(sut.isRevealed());
     }
+
+    @Test
+    void isFlaggedCellWhenHiddenReturnsFalse() {
+        Cell sut = new Cell(Visibility.HIDDEN, 0, false, new Position(4, 4));
+        assertFalse(sut.isFlagged());
+    }
+
+    @Test
+    void isFlaggedCellWhenFlaggedReturnsTrue() {
+        Cell sut = new Cell(Visibility.FLAGGED, 1, true, new Position(4, 3));
+        assertTrue(sut.isFlagged());
+    }
+
+    @Test
+    void isFlaggedCellWhenRevealedReturnsFalse() {
+        Cell sut = new Cell(Visibility.REVEALED, 0, false, new Position(3, 4));
+        assertFalse(sut.isFlagged());
+    }
 }
